@@ -17,7 +17,8 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body class ="container">
+<body>
+<div class ="container-fluid">
 	<%
 		List<Map<String, Object>> list = (List<Map<String, Object>>)request.getAttribute("list");
 		int y = (Integer)request.getAttribute("y");
@@ -37,10 +38,10 @@
 		System.out.println(endBlank +" <- endBlank CaahBookListByMonth.jsp");
 		System.out.println(totalTd +" <- totalTd CaahBookListByMonth.jsp");
 	%>
-	<h2><%=y%>년 <%=m%>월</h2>
-	<div>
-		<a href="<%=request.getContextPath()%>/CashBookListByMonthController?y=<%=y%>&m=<%=m-1%>">이전달</a>
-		<a href="<%=request.getContextPath()%>/CashBookListByMonthController?y=<%=y%>&m=<%=m+1%>">다음달</a>
+	<h2 class = "text-center" style ="margin-top:20px"><%=y%>년 <%=m%>월</h2>
+	<div class = "float-right" style="margin-bottom:10px">
+		<a class = "btn btn-outline-secondary" href="<%=request.getContextPath()%>/CashBookListByMonthController?y=<%=y%>&m=<%=m-1%>">이전달</a>
+		<a class = "btn btn-outline-secondary" href="<%=request.getContextPath()%>/CashBookListByMonthController?y=<%=y%>&m=<%=m+1%>">다음달</a>
 	</div>
 	<!-- 
 		1) 이번날 1일의 요일 firstDayYoil -> startBlank -> 일 0, 월 1, 화 2, ... 토 6
@@ -54,13 +55,13 @@
 	<table class ="table table-bordered table-striped">
 		<thead>
 			<tr>
-				<th>일</th>
+				<th class = "text-danger">일</th>
 				<th>월</th>
 				<th>화</th>
 				<th>수</th>
 				<th>목</th>
 				<th>금</th>
-				<th>토</th>
+				<th class = "text-primary">토</th>
 			</tr>
 		</thead>
 		<tr>
@@ -74,9 +75,10 @@
 							c = "text-danger";			
 						} 
 			%>
-						<td class = "<%=c%>">
-							<%=i-startBlank%>
-							<a href="<%=request.getContextPath()%>/InsertCashBookController?y=<%=y%>&m=<%=m%>&d=<%=i-startBlank%>" class="btn btn-light">입력</a>
+						<td>
+							<span class = "<%=c%>"><%=i-startBlank%></span>
+							<a href="<%=request.getContextPath()%>/InsertCashBookController?y=<%=y%>&m=<%=m%>&d=<%=i-startBlank%>" class="btn btn-light float-right">입력</a>
+							<br>
 							<div>
 								<!-- 해당 날짜의 cashbook 목록 출력 -->
 								<%
@@ -110,6 +112,6 @@
 			%>
 		</tr>
 	</table>
-
+</div>
 </body>
 </html>
