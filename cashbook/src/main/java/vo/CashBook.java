@@ -1,6 +1,6 @@
 package vo;
 
-public class Cashbook {
+public class CashBook {
 	private int cashbookNo;
 	private String cashDate;
 	private String kind;
@@ -51,10 +51,12 @@ public class Cashbook {
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
+	
 	@Override
 	public String toString() {
-		return "Cashbook [cashbookNo=" + cashbookNo + ", cashDate=" + cashDate + ", kind=" + kind + ", cash=" + cash
+		return "CashBook [cashbookNo=" + cashbookNo + ", cashDate=" + cashDate + ", kind=" + kind + ", cash=" + cash
 				+ ", memo=" + memo + ", updateDate=" + updateDate + ", createDate=" + createDate + "]";
 	}
+	
 	
 }

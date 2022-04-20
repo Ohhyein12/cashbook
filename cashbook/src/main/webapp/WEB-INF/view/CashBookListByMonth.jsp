@@ -29,14 +29,14 @@
 		int endBlank = (Integer)request.getAttribute("endBlank");
 		int totalTd = (Integer)request.getAttribute("totalTd");
 		
-		System.out.println(list.size() +" <- list.size() CaahBookListByMonth.jsp");
-		System.out.println(y +" <- y CaahBookListByMonth.jsp");
-		System.out.println(m +" <- m CaahBookListByMonth.jsp");
+		System.out.println(list.size() +" <- list.size() CashBookListByMonth.jsp");
+		System.out.println(y +" <- y CashBookListByMonth.jsp");
+		System.out.println(m +" <- m CashBookListByMonth.jsp");
 		
-		System.out.println(startBlank +" <- startBlank CaahBookListByMonth.jsp");
-		System.out.println(endDay +" <- endDay CaahBookListByMonth.jsp");
-		System.out.println(endBlank +" <- endBlank CaahBookListByMonth.jsp");
-		System.out.println(totalTd +" <- totalTd CaahBookListByMonth.jsp");
+		System.out.println(startBlank +" <- startBlank CashBookListByMonth.jsp");
+		System.out.println(endDay +" <- endDay CashBookListByMonth.jsp");
+		System.out.println(endBlank +" <- endBlank CashBookListByMonth.jsp");
+		System.out.println(totalTd +" <- totalTd CashBookListByMonth.jsp");
 	%>
 	<h2 class = "text-center" style ="margin-top:20px"><%=y%>년 <%=m%>월</h2>
 	<div class = "float-right" style="margin-bottom:10px">
@@ -87,6 +87,7 @@
 										if((Integer)map.get("day") == (i-startBlank)) {
 								%>
 											<div>
+												<a href="<%=request.getContextPath()%>/CashBookOneController?cashbookNo=<%=map.get("cashbookNo")%>">상세</a>
 												[<%=map.get("kind")%>] 
 												<%=map.get("cash")%>원
 												<%=map.get("memo")%>...
