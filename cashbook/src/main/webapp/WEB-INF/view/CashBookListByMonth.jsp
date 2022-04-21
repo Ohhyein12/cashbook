@@ -30,6 +30,7 @@
 		System.out.println(totalTd +" <- totalTd CashBookListByMonth.jsp");
 	%>
 	<h2 class = "text-center" style ="margin-top:20px"><%=y%>년 <%=m%>월</h2>
+	<a href = "<%=request.getContextPath()%>/TagRankController">tags</a>
 	<div class = "float-right" style="margin-bottom:10px">
 		<a class = "btn btn-outline-secondary" href="<%=request.getContextPath()%>/CashBookListByMonthController?y=<%=y%>&m=<%=m-1%>">이전달</a>
 		<a class = "btn btn-outline-secondary" href="<%=request.getContextPath()%>/CashBookListByMonthController?y=<%=y%>&m=<%=m+1%>">다음달</a>
