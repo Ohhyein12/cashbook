@@ -119,7 +119,8 @@ public class HashtagDao {
 					+ "	  FROM hashtag h"
 					+ "	  INNER JOIN cashbook c"
 					+ "	  ON c.cashbook_no = h.cashbook_no"
-					+ "	  WHERE c.cash_date BETWEEN ? AND ?";
+					+ "	  WHERE c.cash_date BETWEEN ? AND ?"
+					+ "	  ORDER BY c.cash_date ASC";
 			
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, beginDate);

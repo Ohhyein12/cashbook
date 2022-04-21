@@ -22,11 +22,11 @@
 	
 	<table class = "table">
 		<tr>
-			<th>cashDate</th>
-			<th>cashbookNo</th>
-			<th>kind</th>
 			<th>tag</th>
+			<th>cashDate</th>
+			<th>kind</th>
 			<th>cash</th>
+			<th>memo</th>
 		</tr>
 		<%
 			for(Map<String, Object> map : list) {

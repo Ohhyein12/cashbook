@@ -18,7 +18,12 @@ public class TagByListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HashtagDao hashtagDao = new HashtagDao();
 		
-		String tag = request.getParameter("tag");
+		//요청값 불러오기
+		String tag = null;
+		if(request.getParameter("tag")!=null) { // tag값이 null이 아니라면
+			tag = request.getParameter("tag");
+		}
+		
 		//디버깅
 		System.out.println("tag(TagByListController) : " + tag);
 		

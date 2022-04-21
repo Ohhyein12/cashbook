@@ -19,7 +19,11 @@ public class TagRankController extends HttpServlet {
 		HashtagDao hashtagDao = new HashtagDao();
 		
 		//요청값 불러오기 
-		String kind = request.getParameter("kind"); // 지출, 수입 중 하나를 선택했다면 값이 들어올 것
+		String kind = null;
+		if(request.getParameter("kind")!=null) { // 지출, 수입 중 하나를 선택했다면 값이 들어올 것
+			kind = request.getParameter("kind");
+		} 
+		
 		//디버깅
 		System.out.println("kind(TagController) : " + kind);
 		

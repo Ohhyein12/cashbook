@@ -19,9 +19,14 @@ public class DayController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//요청값 불러오기
-		String beginDate = request.getParameter("beginDate");
-		String lastDate = request.getParameter("lastDate");
+		String beginDate = null;
+		String lastDate = null;
 
+		if(request.getParameter("beginDate")!=null && request.getParameter("lastDate")!=null) {
+			beginDate = request.getParameter("beginDate");
+			lastDate = request.getParameter("lastDate");
+		}
+		
 		HashtagDao hashtagDao = new HashtagDao();
 		
 		// 검색리스트 구현 메서드 호출해서 리스트에 할당
