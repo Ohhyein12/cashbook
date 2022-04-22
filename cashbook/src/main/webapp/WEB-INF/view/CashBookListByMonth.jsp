@@ -7,6 +7,10 @@
 <title>CashBookListByMonth</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<style>
+	.bottom {margin-bottom:30px;}
+	.top {margin-top:10px;}
+</style>
 </head>
 <body>
 <div class ="container-fluid">
@@ -29,14 +33,16 @@
 		System.out.println(endBlank +" <- endBlank CashBookListByMonth.jsp");
 		System.out.println(totalTd +" <- totalTd CashBookListByMonth.jsp");
 	%>
-	<h2 class = "text-center" style ="margin-top:20px"><%=y%>년 <%=m%>월</h2>
-	<div>
-		<%=session.getAttribute("sessionMemberId")%>님 반갑습니다.
-		<a href = "<%=request.getContextPath()%>/LogoutController">로그아웃</a>
+	<div class = "float-right top">
+		<a href="<%=request.getContextPath()%>/SelectMemberOneController?MemberId=<%=session.getAttribute("sessionMemberId")%>"><%=session.getAttribute("sessionMemberId")%></a>님 반갑습니다.
+		
+		<a href = "<%=request.getContextPath()%>/LogoutController" class="btn btn-secondary">로그아웃</a>
 	</div>
-	<div>
-		<a href = "<%=request.getContextPath()%>/TagRankController">tags</a>
+	<div class = "top">
+		<a href = "<%=request.getContextPath()%>/TagRankController" class="btn btn-warning">tags</a>
 	</div>
+	<h2 class = "text-center bottom top"><%=y%>년 <%=m%>월</h2>
+
 	<div class = "float-right" style="margin-bottom:10px">
 		<a class = "btn btn-outline-secondary" href="<%=request.getContextPath()%>/CashBookListByMonthController?y=<%=y%>&m=<%=m-1%>">이전달</a>
 		<a class = "btn btn-outline-secondary" href="<%=request.getContextPath()%>/CashBookListByMonthController?y=<%=y%>&m=<%=m+1%>">다음달</a>

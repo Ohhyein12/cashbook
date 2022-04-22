@@ -15,6 +15,7 @@ import vo.Member;
 
 @WebServlet("/LoginController")
 public class LoginController extends HttpServlet {
+	
 	// 로그인 폼
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -25,7 +26,7 @@ public class LoginController extends HttpServlet {
 			return;
 		}
 		
-		//로그인이 이미 되어있는 멤버라면 다른 곳으로 리다이렉트
+		//로그인이 이미 되어있는 멤버가 아니라면 다른 곳으로 리다이렉트
 		request.getRequestDispatcher("/WEB-INF/view/Login.jsp").forward(request, response);
 		
 	}
@@ -36,8 +37,9 @@ public class LoginController extends HttpServlet {
 		
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
-		Member member = new Member();
 		
+		//가공
+		Member member = new Member();
 		member.setMemberId(memberId);
 		member.setMemberPw(memberPw);
 		
@@ -45,6 +47,8 @@ public class LoginController extends HttpServlet {
 		MemberDao memberDao = new MemberDao();
 		//세션에 넣을 값
 		String returnMemberId = memberDao.selectMemberByIdPw(member);
+		
+		// 로그인 실패 -> null
 		if(returnMemberId == null) {
 			//로그인 실패시 로그인 폼을 재요청
 			System.out.println("로그인실패<-- LoginController.doPost()");
