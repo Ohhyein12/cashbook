@@ -37,28 +37,28 @@ public class InsertMemberController extends HttpServlet {
 		
 		// 요청값 불러오기
 		String memberId = null;
-		if(request.getParameter("memberId") != null) {
+		if(request.getParameter("memberId") != null && !"".equals(request.getParameter("memberId"))) {
 			memberId = request.getParameter("memberId");
 		}
 		String memberName = null;
-		if(request.getParameter("memberName") != null) {
+		if(request.getParameter("memberName") != null && !"".equals(request.getParameter("memberName"))) {
 			memberName = request.getParameter("memberName");
 		}
 		String memberGender = null;
-		if(request.getParameter("memberGender") != null) {
+		if(request.getParameter("memberGender") != null && !"".equals(request.getParameter("memberGender"))) {
 			memberGender = request.getParameter("memberGender");
 		}
 		
 		String memberAddress = null;
-		if(request.getParameter("memberAddress") != null) {
+		if(request.getParameter("memberAddress") != null && !"".equals(request.getParameter("memberAddress"))) {
 			memberAddress = request.getParameter("memberAddress");
 		}
 		String memberPhone = null;
-		if(request.getParameter("memberPhone") != null) {
+		if(request.getParameter("memberPhone") != null && !"".equals(request.getParameter("memberPhone"))) {
 			memberPhone = request.getParameter("memberPhone");
 		}
 		String memberPw = null;
-		if(request.getParameter("memberPw") != null) {
+		if(request.getParameter("memberPw") != null && !"".equals(request.getParameter("memberPw"))) {
 			memberPw = request.getParameter("memberPw");
 		}
 		

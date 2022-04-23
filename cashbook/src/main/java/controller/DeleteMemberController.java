@@ -32,7 +32,7 @@ public class DeleteMemberController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberId = request.getParameter("memberId");
 		String memberPw = null;
-		if(request.getParameter("memberPw")!= null) {
+		if(request.getParameter("memberPw")!= null && !"".equals(request.getParameter("memberPw"))) {
 			memberPw = request.getParameter("memberPw");
 		}
 		

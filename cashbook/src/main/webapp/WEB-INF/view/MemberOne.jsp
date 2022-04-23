@@ -27,31 +27,34 @@
 			<col width = "*">
 		</colgroup>
 		<tr>
-			<th class="table-warning">Id</th>
+			<th class="table-success">Id</th>
 			<td><%=member.getMemberId()%></td>
 		</tr>
 		<tr>
-			<th class="table-warning">이름</th>
+			<th class="table-success">이름</th>
 			<td><%=member.getMemberName()%></td>
 		</tr>
 		<tr>
-			<th class="table-warning">주소</th>
+			<th class="table-success">주소</th>
 			<td><%=member.getMemberAddress()%></td>
 		</tr>
 		<tr>
-			<th class="table-warning">성별</th>
+			<th class="table-success">성별</th>
 			<td><%=member.getMemberGender()%></td>
 		</tr>
 		<tr>
-			<th class="table-warning">휴대폰 번호</th>
+			<th class="table-success">휴대폰 번호</th>
 			<td><%=member.getMemberPhone()%></td>
 		</tr>
 		<tr>
-			<th class="table-warning">가입 날짜</th>
+			<th class="table-success">가입 날짜</th>
 			<td><%=member.getCreateDate()%></td>
 		</tr>
 	</table>
-	<a href = "<%=request.getContextPath()%>/UpdateMemberController">수정</a>
-	<a href = "<%=request.getContextPath()%>/DeleteMemberController">삭제</a>
+	<a href="<%=request.getContextPath()%>/CashBookListByMonthController" class="btn btn-success">이전</a>
+	<div class = "float-right">
+		<a href = "<%=request.getContextPath()%>/UpdateMemberController" class="btn btn-outline-success">수정</a>
+		<a href = "<%=request.getContextPath()%>/DeleteMemberController" class="btn btn-outline-success">삭제</a>
+	</div>
 </body>
 </html>

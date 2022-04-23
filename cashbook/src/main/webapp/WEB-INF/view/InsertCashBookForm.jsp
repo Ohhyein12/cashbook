@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>insertCashBookForm</title>
+<title>InsertCashBookForm</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <style>
 	.bottom {margin-bottom:60px;}
@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div class = "container">
-		<h1 class = "bottom top">insertCashBook</h1>
+		<h1 class = "bottom top">InsertCashBook</h1>
 		<form action="<%=request.getContextPath()%>/InsertCashBookController" method="post">
 			<table class = "table table-bordered">
 				<tr>
