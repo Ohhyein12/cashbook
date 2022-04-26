@@ -19,7 +19,7 @@
 			System.out.println(cashBook +"<--cashBook CashBookOne.jsp");
 			
 	%>
-	<h2 class = "bottom top text-center">CashBookOne</h2>
+	<h2 class = "bottom top text-center">가계부 상세 정보</h2>
 	<table class="table table-bordered">
 		<colgroup>
 			<col width = "20%">

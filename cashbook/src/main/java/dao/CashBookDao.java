@@ -61,7 +61,8 @@ public class CashBookDao {
 	}
 	
 	//입력위한 메서드
-	public void insertCashBook(CashBook cashBook, List<String> hashtag) {
+	public int insertCashBook(CashBook cashBook, List<String> hashtag, String memberId) {
+		int row = 0;
 		Connection conn =null;
 		PreparedStatement stmt =null;
 		ResultSet rs = null;
@@ -71,17 +72,25 @@ public class CashBookDao {
 			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
 			conn.setAutoCommit(false); // 자동커밋을 해제
 			
-			String sql = "INSERT INTO cashbook(cash_date,kind,cash,memo,update_date,create_date)"
-						+ "   VALUES(?,?,?,?,NOW(),NOW())";
+			String sql = "INSERT INTO cashbook"
+					+ "        (cash_date"
+					+ "         , kind"
+					+ "         , cash"
+					+ "         , memo"
+					+ "         , update_date"
+					+ "         , create_date"
+					+ "         , member_id)"
+					+ "   VALUES(?,?,?,?,NOW(),NOW(),?)";
 			
 			//sql(insert)만 실행하는게 아니라 select(방금 생성된 행의 키값)도 같이 실행 ex) select 방금입력한 cashbook_no from cashbook;
 			stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-			stmt.setString(1,  cashBook.getCashDate());
-			stmt.setString(2,  cashBook.getKind());
-			stmt.setInt(3,  cashBook.getCash());
-			stmt.setString(4,  cashBook.getMemo());
+			stmt.setString(1, cashBook.getCashDate());
+			stmt.setString(2, cashBook.getKind());
+			stmt.setInt(3, cashBook.getCash());
+			stmt.setString(4, cashBook.getMemo());
+			stmt.setString(5, memberId);
 			
-			stmt.executeUpdate(); //insert
+			row = stmt.executeUpdate(); //insert
 			rs = stmt.getGeneratedKeys(); // select 방금입력한 cashbook_no from cashbook
 			
 			int cashbookNo = 0;
@@ -116,11 +125,84 @@ public class CashBookDao {
 				e.printStackTrace();
 			}
 		}
-		
+		return row;
 	}
+	// 수정위한 메서드
+	public int UpdateCashBook(CashBook cashBook, List<String> hashtag, String memberId) {
+		//수정한 행 개수 담을 row 생성
+		int row = 0;
+		Connection conn =null;
+		PreparedStatement stmt =null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
+			conn.setAutoCommit(false); // 자동커밋을 해제
+			
+			String CashBookSql = "UPDATE cashbook SET"
+					+"           cash_date=?"
+					+"			 , kind=?"
+					+"			 , cash=?"
+					+"			 , memo=?"
+					+"			 , update_date=NOW()"
+					+"			 , member_id=?"
+					+"	 WHERE cashbook_no=?";
+			
+			stmt = conn.prepareStatement(CashBookSql);
+			stmt.setString(1, cashBook.getCashDate());
+			stmt.setString(2, cashBook.getKind());
+			stmt.setInt(3, cashBook.getCash());
+			stmt.setString(4, cashBook.getMemo());
+			stmt.setString(5, memberId);
+			stmt.setInt(6, cashBook.getCashbookNo());
+			
+			
+			row = stmt.executeUpdate(); 
+			
+			// hashtag를 저장하기전 해당 태그 삭제 
+			PreparedStatement deleteHashTagStmt = null;
+			for(String h : hashtag) { // for문은 h 사이즈 개수만
+				String deleteHastTagSql = "DELETE FROM hashtag WHERE cashbook_no=?";
+				deleteHashTagStmt = conn.prepareStatement(deleteHastTagSql);
+				deleteHashTagStmt.setInt(1, cashBook.getCashbookNo());
+				deleteHashTagStmt.executeUpdate();
+			}
+			
+			// hashtag를 저장하는 코드
+			PreparedStatement insertHashTagStmt = null;
+			for(String h : hashtag) { // for문은 h 사이즈 개수만
+				String insertHashTagSql = "INSERT INTO hashtag(cashbook_no, tag, create_date) VALUES(?,?,NOW())";
+				insertHashTagStmt = conn.prepareStatement(insertHashTagSql);
+				insertHashTagStmt.setInt(1, cashBook.getCashbookNo());
+				insertHashTagStmt.setString(2, h); // for문 순서대로
+				insertHashTagStmt.executeUpdate();
+			}
+			
+			conn.commit(); // 최종 커밋
+			
+		} catch (Exception e) {
+			try {
+				conn.rollback(); //예외 발생하면 롤백
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			try {
+				// DB자원반납
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		//수정한 행 개수 담은 row 변수 리턴
+		return row;
+	}
+	
 	// 삭제위한 메서드
 	public int deleteCashBook(int cashbookNo) {
-		//삭제한 행 담을 row 생성
+		//삭제한 행 개수 담을 row 생성
 		int row = 0;
 		Connection conn = null;
 		PreparedStatement stmt = null;

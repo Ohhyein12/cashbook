@@ -14,8 +14,9 @@ import javax.servlet.http.HttpSession;
 import dao.CashBookDao;
 import vo.CashBook;
 
-@WebServlet("/InsertCashBookController")
-public class InsertCashBookController extends HttpServlet {
+@WebServlet("/UpdateCashBookController")
+public class UpdateCashBookController extends HttpServlet {
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(); 
@@ -25,32 +26,49 @@ public class InsertCashBookController extends HttpServlet {
 			return;
 		}
 		
-		String y = request.getParameter("y");
-		String m = request.getParameter("m");
-		String d = request.getParameter("d");
-		String cashDate = y+"-"+m+"-"+d;
-		request.setAttribute("cashDate", cashDate);
-		request.getRequestDispatcher("/WEB-INF/view/InsertCashBookForm.jsp").forward(request, response);
+		//요청값 불러오기
+		int cashbookNo = Integer.parseInt(request.getParameter("cashbookNo"));
+		System.out.println("cashbokNo(UpdateCashBookController.doGet()) : " + cashbookNo);
+		
+		// cashbookNo이 null이라면 다시 가계부로 보내기
+		if(request.getParameter("cashbookNo") == null) {
+			response.sendRedirect(request.getContextPath()+"/CashBookListByMonthController?null=cashbookNo");
+			return;
+		}
+		
+		CashBookDao cashBookDao = new CashBookDao();
+		
+		// cashBookDao에서 선택한 가계부 정보 담아올 메서드 호출해서 담기
+		CashBook cashBook = cashBookDao.selectCashBookOne(cashbookNo);
+		request.setAttribute("cashBook", cashBook);
+		
+		// 뷰 포워딩
+		request.getRequestDispatcher("/WEB-INF/view/UpdateCashBook.jsp").forward(request, response);
+		
 	}
 
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//인코딩
 		request.setCharacterEncoding("utf-8");
 		
 		//요청값 불러오기
+		int cashbookNo = Integer.parseInt(request.getParameter("cashbookNo"));
 		String cashDate = request.getParameter("cashDate");
 		String kind = request.getParameter("kind");
 		int cash = Integer.parseInt(request.getParameter("cash"));
 		String memo = request.getParameter("memo");
 		
 		//디버깅
-		System.out.println(cashDate + " <--cashDate InsertCashBookController.doPost()");
-		System.out.println(kind + " <--kind InsertCashBookController.doPost()");
-		System.out.println(cash + " <--cash InsertCashBookController.doPost()");
-		System.out.println(memo + " <--memo InsertCashBookController.doPost()");
+		System.out.println(cashbookNo + " <--cashbookNo UpdateCashBookController.doPost()");
+		System.out.println(cashDate + " <--cashDate UpdateCashBookController.doPost()");
+		System.out.println(kind + " <--kind UpdateCashBookController.doPost()");
+		System.out.println(cash + " <--cash UpdateCashBookController.doPost()");
+		System.out.println(memo + " <--memo UpdateCashBookController.doPost()");
 		
-		//요청값 변수로 가공 
+		//요청값 변수 가공
 		CashBook cashBook = new CashBook();
+		cashBook.setCashbookNo(cashbookNo);
 		cashBook.setCashDate(cashDate);
 		cashBook.setKind(kind);
 		cashBook.setCash(cash);
@@ -69,22 +87,26 @@ public class InsertCashBookController extends HttpServlet {
 			}
 		}
 		//디버깅
-		System.out.println(hashtag.size() + " <--hashtag.size InsertCashBookController.doPost()");
+		System.out.println(hashtag.size() + " <--hashtag.size UpdateCashBookController.doPost()");
 		for(String h : hashtag) {
-			System.out.println(h + " <-- hashtag InsertCashBookController.doPost()");
+			System.out.println(h + " <-- hashtag UpdateCashBookController.doPost()");
 		}
 		
 		HttpSession session = request.getSession(); 
 		String memberId = (String)session.getAttribute("sessionMemberId");
 		
 		CashBookDao cashBookDao = new CashBookDao();
-		int row = cashBookDao.insertCashBook(cashBook, hashtag, memberId);
 		
-		//뷰 포워딩
+		//cashBookDao의 수정할 UpdateCashBook메서드 호출해서 수정한 개수 row 변수에 담기
+		int row = cashBookDao.UpdateCashBook(cashBook, hashtag, memberId);
+		
 		if(row == 1) {
-			response.sendRedirect(request.getContextPath()+"/CashBookListByMonthController");
+			//뷰 포워딩
+			response.sendRedirect(request.getContextPath()+"/CashBookOneController?cashbookNo="+cashbookNo);
 		} else {
-			response.sendRedirect(request.getContextPath()+"/InsertCashBookController?error=insertFail");
+			response.sendRedirect(request.getContextPath()+"/UpdateCashBookController?error=UpdateFail");
 		}
+		
 	}
+
 }
