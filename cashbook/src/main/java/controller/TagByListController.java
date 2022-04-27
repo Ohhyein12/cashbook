@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.HashtagDao;
 
@@ -16,6 +17,15 @@ import dao.HashtagDao;
 @WebServlet("/TagByListController")
 public class TagByListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession(); 
+		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
+		System.out.println("sessionMemberId(TagByListController) :" + sessionMemberId);
+		if(sessionMemberId == null) { // 로그인 된 상태가 아니라면
+			response.sendRedirect(request.getContextPath()+"/LoginController");
+			return;
+		}
+		
 		HashtagDao hashtagDao = new HashtagDao();
 		
 		//요청값 불러오기

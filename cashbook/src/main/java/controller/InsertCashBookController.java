@@ -20,6 +20,7 @@ public class InsertCashBookController extends HttpServlet {
 		
 		HttpSession session = request.getSession(); 
 		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
+		System.out.println("sessionMemberId(InsertCashBookController) :" + sessionMemberId);
 		if(sessionMemberId == null) { // 로그인 된 상태가 아니라면
 			response.sendRedirect(request.getContextPath()+"/LoginController");
 			return;
@@ -32,7 +33,7 @@ public class InsertCashBookController extends HttpServlet {
 		request.setAttribute("cashDate", cashDate);
 		request.getRequestDispatcher("/WEB-INF/view/InsertCashBookForm.jsp").forward(request, response);
 	}
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//인코딩
 		request.setCharacterEncoding("utf-8");
@@ -43,11 +44,16 @@ public class InsertCashBookController extends HttpServlet {
 		int cash = Integer.parseInt(request.getParameter("cash"));
 		String memo = request.getParameter("memo");
 		
+		// 헌재 로그인된 세션의 아이디 받아와서 저장하기
+		HttpSession session = request.getSession(); 
+		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
+		
 		//디버깅
 		System.out.println(cashDate + " <--cashDate InsertCashBookController.doPost()");
 		System.out.println(kind + " <--kind InsertCashBookController.doPost()");
 		System.out.println(cash + " <--cash InsertCashBookController.doPost()");
 		System.out.println(memo + " <--memo InsertCashBookController.doPost()");
+		System.out.println(sessionMemberId + "<--sessionMemberId InsertCashBookController.doPost()");
 		
 		//요청값 변수로 가공 
 		CashBook cashBook = new CashBook();
@@ -55,6 +61,7 @@ public class InsertCashBookController extends HttpServlet {
 		cashBook.setKind(kind);
 		cashBook.setCash(cash);
 		cashBook.setMemo(memo);
+		cashBook.setMemberId(sessionMemberId);
 		
 		//태그 값 구하기
 		List<String> hashtag = new ArrayList<>(); // tag 넣을 리스트
@@ -74,11 +81,8 @@ public class InsertCashBookController extends HttpServlet {
 			System.out.println(h + " <-- hashtag InsertCashBookController.doPost()");
 		}
 		
-		HttpSession session = request.getSession(); 
-		String memberId = (String)session.getAttribute("sessionMemberId");
-		
 		CashBookDao cashBookDao = new CashBookDao();
-		int row = cashBookDao.insertCashBook(cashBook, hashtag, memberId);
+		int row = cashBookDao.insertCashBook(cashBook, hashtag);
 		
 		//뷰 포워딩
 		if(row == 1) {

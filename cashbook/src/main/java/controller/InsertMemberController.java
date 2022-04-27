@@ -20,6 +20,7 @@ public class InsertMemberController extends HttpServlet {
 		
 		HttpSession session = request.getSession(); 
 		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
+		System.out.println("sessionMemberId(InsertMemberController) :" + sessionMemberId);
 		if(sessionMemberId == null) { // 로그인 상태가 아니라면 
 			
 			// 회원가입 버튼으로 들어왔다면 회원가입 jsp로 보내주기
@@ -87,15 +88,12 @@ public class InsertMemberController extends HttpServlet {
 		
 		if(row != 1) { // 행 추가 실패했을경우
 			System.out.println("회원가입 실패");
-			response.sendRedirect(request.getContextPath()+"/InsertMemberController");
+			response.sendRedirect(request.getContextPath()+"/InsertMemberController?error=insertFail");
 			return;
 		} 
 		
 		//추가했으면 다시 로그인페이지로 보내기
-		response.sendRedirect(request.getContextPath()+"/LoginController");
-		
-		
-		
+		response.sendRedirect(request.getContextPath()+"/LoginController");	
 		
 	}
 

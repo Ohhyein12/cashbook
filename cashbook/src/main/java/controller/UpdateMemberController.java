@@ -21,21 +21,19 @@ public class UpdateMemberController extends HttpServlet {
 		// 수정버튼으로 들어오면
 		HttpSession session = request.getSession(); 
 		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
+		System.out.println("sessionMemberId(UpdateMemberController) :" + sessionMemberId);
 		if(sessionMemberId == null) { // 로그인 상태가 아니라면 
 			response.sendRedirect(request.getContextPath()+"/LoginController");
 			return;
 		}
 		
-		// session에 로그인 중인 memberId값 불러오기
-		String memberId = (String)session.getAttribute("sessionMemberId");
-		
 		//디버깅
-		System.out.println("memberId(UpdateMemberController): " + memberId);
+		System.out.println("memberId(UpdateMemberController): " + sessionMemberId);
 				
 		MemberDao memberDao = new MemberDao();
 			
 		// 사용자의 개인정보 들고올 메서드 호출해서 member객체에 담기
-		Member member = memberDao.selectMemberOne(memberId);
+		Member member = memberDao.selectMemberOne(sessionMemberId);
 				
 		request.setAttribute("member", member);
 		
@@ -97,7 +95,7 @@ public class UpdateMemberController extends HttpServlet {
 
 		if(!ChangeMemberPw.equals(CheckMemberPw)) { // 수정할 비밀번호와 비밀번호 확인에 들어온 비밀번호가 같지않다면
 			System.out.println("수정할 비밀번호와 비밀번호 확인의 비밀번호가 같지않습니다");
-			response.sendRedirect(request.getContextPath()+"/UpdateMemberController");
+			response.sendRedirect(request.getContextPath()+"/UpdateMemberController?error=unequalpassword");
 			return;
 		}
 		
@@ -116,7 +114,7 @@ public class UpdateMemberController extends HttpServlet {
 		
 		if(row != 1) { // 행 수정 실패했을경우
 			System.out.println("정보수정 실패");
-			response.sendRedirect(request.getContextPath()+"/UpdateMemberController");
+			response.sendRedirect(request.getContextPath()+"/UpdateMemberController?error=UpdateMemberFail");
 			return;
 		} 
 		

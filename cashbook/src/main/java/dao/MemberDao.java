@@ -97,20 +97,44 @@ public class MemberDao {
 	// 회원 삭제 delete
 	public int deleteMember(Member member) {
 		Connection conn = null;
-		PreparedStatement stmt = null;
+		PreparedStatement hashtagStmt = null;
+		PreparedStatement cashbookStmt = null;
+		PreparedStatement memberStmt = null;
 		int row = 0;
-		String sql = "DELETE FROM member WHERE member_id=? AND member_pw=password(?)";
+		// member_id가 sessionId인 곳의 해시태그 삭제 --> cashbook의 외래키와 연결돼있어서 조인해서 삭제해줌
+		String hashtagSql = "DELETE h"
+				+ "			FROM hashtag h"
+				+ "			INNER JOIN cashbook c"
+				+ "			ON h.cashbook_no = c.cashbook_no"
+				+ "			WHERE c.member_id = ?";
+		// member_id가 sessionId인 곳의 cashbook 정보 삭제
+		String cashbookSql = "DELETE FROM cashbook WHERE member_id=?";
+		// member 정보 삭제
+		String memberSql = "DELETE FROM member WHERE member_id=? AND member_pw=password(?)";
 		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
 
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, member.getMemberId());
-			stmt.setString(2, member.getMemberPw());
+			// member_id가 sessionId인 곳의 해시태그 삭제
+			hashtagStmt = conn.prepareStatement(hashtagSql);
+			hashtagStmt.setString(1, member.getMemberId());
 			
+			hashtagStmt.executeUpdate();
 			
-			row = stmt.executeUpdate();
+			// member_id가 sessionId인 곳의 cashbook 정보 삭제
+			cashbookStmt = conn.prepareStatement(cashbookSql);
+			cashbookStmt.setString(1, member.getMemberId());
+			
+			cashbookStmt.executeUpdate();
+			
+			// member 정보 삭제
+			memberStmt = conn.prepareStatement(memberSql);
+			memberStmt.setString(1, member.getMemberId());
+			memberStmt.setString(2, member.getMemberPw());
+			
+			// 삭제한 행 개수 담기
+			row = memberStmt.executeUpdate();
 			
 			conn.commit();
 		} catch (Exception e) {

@@ -19,6 +19,7 @@ public class DeleteMemberController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(); 
 		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
+		System.out.println("sessionMemberId(DeleteMemberController) :" + sessionMemberId);
 		if(sessionMemberId == null) { // 로그인 된 상태가 아니라면
 			response.sendRedirect(request.getContextPath()+"/LoginController");
 			return;
@@ -50,7 +51,7 @@ public class DeleteMemberController extends HttpServlet {
 		
 		if(row != 1) { // 행 삭제 실패했을경우
 			System.out.println("정보 삭제 실패");
-			response.sendRedirect(request.getContextPath()+"/DeleteMemberController");
+			response.sendRedirect(request.getContextPath()+"/DeleteMemberController?error=DeleteFail");
 			return;
 		} 
 		

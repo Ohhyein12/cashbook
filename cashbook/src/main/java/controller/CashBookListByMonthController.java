@@ -20,6 +20,7 @@ public class CashBookListByMonthController extends HttpServlet {
 		
 		HttpSession session = request.getSession(); 
 		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
+		System.out.println("sessionMemberId(CashBookListByMonthController) :" + sessionMemberId);
 		if(sessionMemberId == null) { // 로그인 된 상태가 아니라면
 			response.sendRedirect(request.getContextPath()+"/LoginController");
 			return;
@@ -89,7 +90,7 @@ public class CashBookListByMonthController extends HttpServlet {
 		// 2) 모델값(월별 가계부 리스트)을 반환하는 비지니스로직(모델) 호출
 		CashBookDao cashBookDao = new CashBookDao();
 		
-		List<Map<String, Object>> list = cashBookDao.selectCashBookListByMonth(y, m);
+		List<Map<String, Object>> list = cashBookDao.selectCashBookListByMonth(y, m, sessionMemberId);
 		/*
 		 달력출력에 필요한 모델값(1), 2), 3), 4)) + 데이터베이스에서 반환된 모델값(list, y출력년도, m출력월) + 오늘날짜(today)
 		 */

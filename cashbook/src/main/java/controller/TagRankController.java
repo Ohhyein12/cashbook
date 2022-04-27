@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.HashtagDao;
 
@@ -16,6 +17,15 @@ import dao.HashtagDao;
 @WebServlet("/TagRankController")
 public class TagRankController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession(); 
+		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
+		System.out.println("sessionMemberId(TagRankController) :" + sessionMemberId);
+		if(sessionMemberId == null) { // 로그인 된 상태가 아니라면
+			response.sendRedirect(request.getContextPath()+"/LoginController");
+			return;
+		}
+		
 		HashtagDao hashtagDao = new HashtagDao();
 		
 		//요청값 불러오기 
@@ -30,9 +40,9 @@ public class TagRankController extends HttpServlet {
 		List<Map<String, Object>> list = null;
 		
 		if(request.getParameter("kind") == null) { // 수입, 지출을 누르지않았다면
-			list = hashtagDao.selectTagRankList(); // 전체 항목 리스트 출력
+			list = hashtagDao.selectTagRankList(sessionMemberId); // 전체 항목 리스트 출력
 		} else {
-			list = hashtagDao.selectKindByList(kind); 
+			list = hashtagDao.selectKindByList(kind, sessionMemberId); 
 		}
 
 		request.setAttribute("list", list);

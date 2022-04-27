@@ -21,6 +21,7 @@ public class UpdateCashBookController extends HttpServlet {
 		
 		HttpSession session = request.getSession(); 
 		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
+		System.out.println("sessionMemberId(UpdateCashBookController(doGet)) :" + sessionMemberId);
 		if(sessionMemberId == null) { // 로그인 된 상태가 아니라면
 			response.sendRedirect(request.getContextPath()+"/LoginController");
 			return;
@@ -46,7 +47,6 @@ public class UpdateCashBookController extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/view/UpdateCashBook.jsp").forward(request, response);
 		
 	}
-
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//인코딩
@@ -66,6 +66,11 @@ public class UpdateCashBookController extends HttpServlet {
 		System.out.println(cash + " <--cash UpdateCashBookController.doPost()");
 		System.out.println(memo + " <--memo UpdateCashBookController.doPost()");
 		
+		// 헌재 로그인된 세션의 아이디 받아와서 저장하기
+		HttpSession session = request.getSession(); 
+		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
+		System.out.println("sessionMemberId(UpdateCashBookController(doPost)) :" + sessionMemberId);
+		
 		//요청값 변수 가공
 		CashBook cashBook = new CashBook();
 		cashBook.setCashbookNo(cashbookNo);
@@ -73,6 +78,7 @@ public class UpdateCashBookController extends HttpServlet {
 		cashBook.setKind(kind);
 		cashBook.setCash(cash);
 		cashBook.setMemo(memo);
+		cashBook.setMemberId(sessionMemberId);
 		
 		//태그 값 구하기
 		List<String> hashtag = new ArrayList<>(); // tag 넣을 리스트
@@ -91,14 +97,12 @@ public class UpdateCashBookController extends HttpServlet {
 		for(String h : hashtag) {
 			System.out.println(h + " <-- hashtag UpdateCashBookController.doPost()");
 		}
-		
-		HttpSession session = request.getSession(); 
-		String memberId = (String)session.getAttribute("sessionMemberId");
+	
 		
 		CashBookDao cashBookDao = new CashBookDao();
 		
 		//cashBookDao의 수정할 UpdateCashBook메서드 호출해서 수정한 개수 row 변수에 담기
-		int row = cashBookDao.UpdateCashBook(cashBook, hashtag, memberId);
+		int row = cashBookDao.UpdateCashBook(cashBook, hashtag);
 		
 		if(row == 1) {
 			//뷰 포워딩

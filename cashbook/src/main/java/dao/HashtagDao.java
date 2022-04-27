@@ -11,25 +11,27 @@ import java.util.List;
 import java.util.Map;
 
 public class HashtagDao {
-	public List<Map<String, Object>> selectTagRankList() {
+	public List<Map<String, Object>> selectTagRankList(String sessionMemberId) {
 		List<Map<String, Object>> list = new ArrayList<>();
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
-		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
 			String sql = "SELECT kind, t.tag, t.cnt, RANK() over(ORDER BY t.cnt DESC) rank"
 					+ "		FROM"
-					+ "		(SELECT c.kind kind, tag, COUNT(*) cnt"
+					+ "		(SELECT c.kind kind, tag, COUNT(*) cnt, member_id"
 					+ " 	FROM hashtag t INNER JOIN cashbook c"
 					+ " 	ON t.cashbook_no = c.cashbook_no"
-					+ " 	GROUP BY t.tag) t";
+					+ " 	GROUP BY t.tag) t"
+					+ "		WHERE member_id=?";
 			
 			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, sessionMemberId);
+			
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				Map<String, Object> map = new HashMap<String, Object>();
@@ -52,27 +54,30 @@ public class HashtagDao {
 		return list;
 	}
 	
+	
 	//수입, 지출 눌렀을때 항목 들고올 메서드
-	public List<Map<String, Object>> selectKindByList(String kind) {
+	public List<Map<String, Object>> selectKindByList(String kind, String sessionMemberId) {
 		List<Map<String, Object>> list = new ArrayList<>();
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
-		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
 			String sql = "SELECT kind, t.tag, t.cnt, RANK() over(ORDER BY t.cnt DESC) rank"
 					+ "		FROM"
-					+ "		(SELECT c.kind kind, tag, COUNT(*) cnt"
+					+ "		(SELECT c.kind kind, tag, COUNT(*) cnt, member_id"
 					+ " 	FROM hashtag t INNER JOIN cashbook c"
 					+ " 	ON t.cashbook_no = c.cashbook_no"
 					+ " 	WHERE c.kind = ?"
-					+ " 	GROUP BY t.tag) t";
+					+ " 	GROUP BY t.tag) t"
+					+ "		WHERE member_id=?";
+			
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, kind);
+			stmt.setString(2, sessionMemberId);
 			
 			rs = stmt.executeQuery();
 			
@@ -99,7 +104,7 @@ public class HashtagDao {
 	}
 	
 	// 날짜별 검색 메서드 구현
-	public List<Map<String, Object>> selectDateByList(String beginDate, String lastDate) {
+	public List<Map<String, Object>> selectDateByList(String beginDate, String lastDate, String sessionMemberId) {
 		List<Map<String, Object>> list = new ArrayList<>();
 		
 		Connection conn = null;
@@ -119,12 +124,13 @@ public class HashtagDao {
 					+ "	  FROM hashtag h"
 					+ "	  INNER JOIN cashbook c"
 					+ "	  ON c.cashbook_no = h.cashbook_no"
-					+ "	  WHERE c.cash_date BETWEEN ? AND ?"
-					+ "	  ORDER BY c.cash_date ASC";
+					+ "	  WHERE c.member_id=? AND c.cash_date BETWEEN ? AND ?"
+					+ "	  ORDER BY c.cash_date DESC";
 			
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, beginDate);
-			stmt.setString(2, lastDate);
+			stmt.setString(1, sessionMemberId);
+			stmt.setString(2, beginDate);
+			stmt.setString(3, lastDate);
 			
 			rs = stmt.executeQuery();
 			

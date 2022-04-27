@@ -21,6 +21,7 @@ public class LoginController extends HttpServlet {
 
 		HttpSession session = request.getSession(); 
 		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
+		System.out.println("sessionMemberId(LoginController) :" + sessionMemberId);
 		if(sessionMemberId != null) { //이미 로그인이 된 상태
 			response.sendRedirect(request.getContextPath()+"/CashBookListByMonthController");
 			return;
