@@ -18,7 +18,7 @@
            // 디버깅
 		System.out.println(cashBook +"<--cashBook CashBookOne.jsp");
 		
-%>
+%>	
 	<h2 class = "bottom top text-center">가계부 정보 수정</h2>
 	<form method="post" action="<%=request.getContextPath()%>/UpdateCashBookController">
 		<table class="table table-bordered">
@@ -27,13 +27,13 @@
 				<col width = "*">
 			</colgroup>
 			<tr>
-				<th>cashbookNo</th>
-				<td><input type="number" name="cashbookNo" readonly="readonly" value=<%=cashBook.getCashbookNo()%>></td>
+				<th class = "table-active">cashbookNo</th>
+				<td><input type="number" name="cashbookNo" readonly="readonly" value=<%=cashBook.getCashbookNo()%> class = "form-control"></td>
 				
 			</tr>
 			<tr>
 				<th class = "table-active">CashDate</th>
-				<td><input type="date" name="cashDate" value=<%=cashBook.getCashDate()%>></td>
+				<td><input type="date" name="cashDate" value=<%=cashBook.getCashDate()%> class = "form-control"></td>
 			</tr>
 			<tr>
 				<th class = "table-active">Kind</th>
@@ -43,7 +43,7 @@
 			</tr>
 			<tr>
 				<th class = "table-active">Cash</th>
-				<td><input type="number" name="cash" value=<%=cashBook.getCash()%>></td>
+				<td><input type="number" name="cash" value=<%=cashBook.getCash()%> class = "form-control"></td>
 			</tr>
 			<tr>
 				<th class = "table-active">Memo</th>
@@ -60,9 +60,9 @@
 				<td><%=cashBook.getCreateDate()%></td>
 			</tr>
 		</table>
-		<button type="submit" class = "btn btn-outline-dark">수정</button>
+		<button type="submit" class = "float-right btn btn-outline-dark">수정</button>
 	</form>
-	<a href="<%=request.getContextPath()%>/CashBookOneController?cashbookNo=<%=cashBook.getCashbookNo()%>" type ="button" class="btn btn-primary">이전</a>
-	<a href="<%=request.getContextPath()%>/CashBookListByMonthController" type ="button" class="btn btn-secondary">리스트</a>
+	<a href="<%=request.getContextPath()%>/CashBookOneController?cashbookNo=<%=cashBook.getCashbookNo()%>" class="btn btn-secondary">이전</a>
+
 </body>
 </html>

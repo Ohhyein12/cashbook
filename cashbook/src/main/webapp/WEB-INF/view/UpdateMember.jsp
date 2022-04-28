@@ -56,15 +56,15 @@
 			</tr>
 			<tr>
 				<th class="table-success">현재 비밀번호</th>
-				<td><input type = "text" name="memberPw"  class = "form-control"></td>
+				<td><input type = "password" name="memberPw"  class = "form-control"></td>
 			</tr>
 			<tr>
 				<th class="table-success">변경할 비밀번호</th>
-				<td><input type = "text" name="ChangeMemberPw"  class = "form-control"></td>
+				<td><input type = "password" name="ChangeMemberPw"  class = "form-control"></td>
 			</tr>
 			<tr>
 				<th class="table-success">비밀번호 확인</th>
-				<td><input type = "text" name="CheckMemberPw"  class = "form-control"></td>
+				<td><input type = "password" name="CheckMemberPw"  class = "form-control"></td>
 			</tr>
 		</table>
 		<a href="<%=request.getContextPath()%>/SelectMemberOneController"  class="btn btn-success">이전</a>

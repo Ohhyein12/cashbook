@@ -8,7 +8,7 @@
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 <style>
-	.bottom {margin-bottom:30px;}
+	.bottom {margin-bottom:80px;}
 	.top {margin-top:10px;}
 </style>
 </head>
@@ -34,7 +34,7 @@
 		System.out.println(totalTd +" <- totalTd CashBookListByMonth.jsp");
 	%>
 	<div class = "float-right top">
-		<a href="<%=request.getContextPath()%>/SelectMemberOneController?MemberId=<%=session.getAttribute("sessionMemberId")%>"><%=session.getAttribute("sessionMemberId")%></a>님 반갑습니다.
+		<a href="<%=request.getContextPath()%>/SelectMemberOneController?MemberId=<%=session.getAttribute("sessionMemberId")%>">[<%=session.getAttribute("sessionMemberId")%>]</a>님 반갑습니다.
 		
 		<a href = "<%=request.getContextPath()%>/LogoutController" class="btn btn-secondary">로그아웃</a>
 	</div>

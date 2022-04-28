@@ -11,35 +11,40 @@
 </style>
 </head>
 <body>
-	<div class = "container">
+	<div class = "container-fluid">
 		<h1 class = "bottom top">InsertCashBook</h1>
 		<form action="<%=request.getContextPath()%>/InsertCashBookController" method="post">
 			<table class = "table table-bordered">
+				<colgroup>
+					<col width = "20%">
+					<col width = "*">
+				</colgroup>
 				<tr>
-					<td class = "table-active">cashDate</td>
+					<th class = "table-active">cashDate</th>
 					<td>
 						<input type="text" name="cashDate" value="<%=(String)request.getAttribute("cashDate")%>" readonly="readonly" class = "form-control">
 					</td>
 				</tr>
 				<tr>
-					<td class = "table-active">kind</td>
+					<th class = "table-active">kind</th>
 					<td>
 						<input type="radio" name="kind" value="수입">수입
 						<input type="radio" name="kind" value="지출">지출
 					</td>
 				</tr>
 				<tr>
-					<td class = "table-active">cash</td>
+					<th class = "table-active">cash</th>
 					<td><input type="number" name="cash" class = "form-control"></td>
 				</tr>
 				<tr>
-					<td class = "table-active">memo</td>
+					<th class = "table-active">memo</th>
 					<td>
 						<textarea rows="4" cols="50" name="memo" class = "form-control"></textarea>
 					</td>
 				</tr>
 			</table>
-			<button type="submit" class = "btn btn-outline-dark">입력</button>
+			<a href="<%=request.getContextPath()%>/CashBookListByMonthController" class = "btn btn-secondary">이전</a>
+			<button type="submit" class = "float-right btn btn-outline-dark">입력</button>
 		</form>
 	</div>
 </body>

@@ -54,8 +54,11 @@
 			<td><%=cashBook.getCreateDate()%></td>
 		</tr>
 	</table>
-	<a href="<%=request.getContextPath()%>/UpdateCashBookController?cashbookNo=<%=cashBook.getCashbookNo()%>" class = "btn btn-outline-dark">수정</a>
-	<a href="<%=request.getContextPath()%>/DeleteCashBookController?cashbookNo=<%=cashBook.getCashbookNo()%>" class = "btn btn-outline-dark">삭제</a>
-	<a href="<%=request.getContextPath()%>/CashBookListByMonthController" class = "float-right btn btn-outline-dark">이전</a>
+	<a href="<%=request.getContextPath()%>/CashBookListByMonthController" class = "btn btn-secondary">이전</a>
+	<span class = "float-right">
+		<a href="<%=request.getContextPath()%>/UpdateCashBookController?cashbookNo=<%=cashBook.getCashbookNo()%>" class = "btn btn-outline-dark">수정</a> 
+		<a href="<%=request.getContextPath()%>/DeleteCashBookController?cashbookNo=<%=cashBook.getCashbookNo()%>" class = "btn btn-outline-dark">삭제</a>
+	</span>
+	
 </body>
 </html>

@@ -52,9 +52,9 @@
 		</tr>
 	</table>
 	<a href="<%=request.getContextPath()%>/CashBookListByMonthController" class="btn btn-success">이전</a>
-	<div class = "float-right">
+	<span class = "float-right">
 		<a href = "<%=request.getContextPath()%>/UpdateMemberController" class="btn btn-outline-success">수정</a>
 		<a href = "<%=request.getContextPath()%>/DeleteMemberController" class="btn btn-outline-success">삭제</a>
-	</div>
+	</span>
 </body>
 </html>
