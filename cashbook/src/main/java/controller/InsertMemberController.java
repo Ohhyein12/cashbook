@@ -23,7 +23,7 @@ public class InsertMemberController extends HttpServlet {
 		System.out.println("sessionMemberId(InsertMemberController) :" + sessionMemberId);
 		if(sessionMemberId == null) { // 로그인 상태가 아니라면 
 			
-			// 회원가입 버튼으로 들어왔다면 회원가입 jsp로 보내주기
+			// 회원가입 버튼으로 들어왔다면 회원가입 jsp 포워딩
 			request.getRequestDispatcher("/WEB-INF/view/InsertMember.jsp").forward(request, response);
 			
 			return;
@@ -73,7 +73,7 @@ public class InsertMemberController extends HttpServlet {
 		System.out.println("memberPhone(insertMemberController):" + memberPhone);
 		System.out.println("memberPw(insertMemberController):" + memberPw);
 	
-		
+		//요청값 데이터 바인딩
 		Member member = new Member();
 		member.setMemberId(memberId);
 		member.setMemberName(memberName);

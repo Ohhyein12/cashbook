@@ -71,7 +71,7 @@ public class UpdateCashBookController extends HttpServlet {
 		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
 		System.out.println("sessionMemberId(UpdateCashBookController(doPost)) :" + sessionMemberId);
 		
-		//요청값 변수 가공
+		//요청값 데이터 바인딩
 		CashBook cashBook = new CashBook();
 		cashBook.setCashbookNo(cashbookNo);
 		cashBook.setCashDate(cashDate);

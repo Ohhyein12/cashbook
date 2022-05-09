@@ -55,7 +55,7 @@ public class InsertCashBookController extends HttpServlet {
 		System.out.println(memo + " <--memo InsertCashBookController.doPost()");
 		System.out.println(sessionMemberId + "<--sessionMemberId InsertCashBookController.doPost()");
 		
-		//요청값 변수로 가공 
+		//요청값 데이터 바인딩
 		CashBook cashBook = new CashBook();
 		cashBook.setCashDate(cashDate);
 		cashBook.setKind(kind);
@@ -85,7 +85,7 @@ public class InsertCashBookController extends HttpServlet {
 		int row = cashBookDao.insertCashBook(cashBook, hashtag);
 		
 		//뷰 포워딩
-		if(row == 1) {
+		if(row == 1) { // 입력 성공했다면
 			response.sendRedirect(request.getContextPath()+"/CashBookListByMonthController");
 		} else {
 			response.sendRedirect(request.getContextPath()+"/InsertCashBookController?error=insertFail");

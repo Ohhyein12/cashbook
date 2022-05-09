@@ -27,7 +27,7 @@ public class DayController extends HttpServlet {
 			return;
 		}
 		
-		//요청값 불러오기
+		//요청값 저장할 변수 생성
 		String beginDate = null;
 		String lastDate = null;
 

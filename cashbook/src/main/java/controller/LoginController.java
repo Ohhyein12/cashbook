@@ -27,14 +27,13 @@ public class LoginController extends HttpServlet {
 			return;
 		}
 		
-		//로그인이 이미 되어있는 멤버가 아니라면 다른 곳으로 리다이렉트
+		//로그인이 이미 되어있는 멤버가 아니라면 다른 곳으로 포워딩
 		request.getRequestDispatcher("/WEB-INF/view/Login.jsp").forward(request, response);
 		
 	}
 
 	// 로그인 액션
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//로그인이 이미 되어있는 멤버라면 다른 곳으로 리다이렉트
 		
 		String memberId = null;
 		if(request.getParameter("memberId")!=null && !"".equals(request.getParameter("memberId"))) {
@@ -45,7 +44,7 @@ public class LoginController extends HttpServlet {
 			memberPw = request.getParameter("memberPw");
 		}
 		
-		//가공
+		//데이터 바인딩
 		Member member = new Member();
 		member.setMemberId(memberId);
 		member.setMemberPw(memberPw);
