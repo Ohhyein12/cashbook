@@ -22,7 +22,7 @@
 	<h1 class = "bottom top text-center">정보 수정하기</h1>
 	<form method = "post" action = "<%=request.getContextPath()%>/UpdateMemberController">
 		<table class="table table-bordered">
-		<colgroup>
+			<colgroup>
 				<col width = "20%">
 				<col width = "*">
 			</colgroup>

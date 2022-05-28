@@ -8,6 +8,9 @@ public class Member {
 	private String memberPhone;
 	private String memberPw;
 	private String createDate;
+	
+	public Member() {}
+	
 	@Override
 	public String toString() {
 		return "Member [memberId=" + memberId + ", memberName=" + memberName + ", memberGender=" + memberGender

@@ -105,7 +105,6 @@ public class UpdateCashBookController extends HttpServlet {
 		int row = cashBookDao.UpdateCashBook(cashBook, hashtag);
 		
 		if(row == 1) {
-			//뷰 포워딩
 			response.sendRedirect(request.getContextPath()+"/CashBookOneController?cashbookNo="+cashbookNo);
 		} else {
 			response.sendRedirect(request.getContextPath()+"/UpdateCashBookController?error=UpdateFail");

@@ -30,21 +30,37 @@ public class TagRankController extends HttpServlet {
 		
 		//요청값 불러오기 
 		String kind = null;
+		String beginDate = null;
+		String lastDate = null;
+
 		if(request.getParameter("kind")!=null) { // 지출, 수입 중 하나를 선택했다면 값이 들어올 것
 			kind = request.getParameter("kind");
 		} 
 		
+		if(request.getParameter("beginDate")!=null || !"".equals(request.getParameter("beginDate")) && request.getParameter("lastDate")!=null || !"".equals(request.getParameter("lastDate"))) {
+			System.out.println("".equals(request.getParameter("beginDate")));
+			System.out.println("".equals(request.getParameter("lastDate")));
+			
+			beginDate = request.getParameter("beginDate");
+			lastDate = request.getParameter("lastDate");
+		}
+		
 		//디버깅
 		System.out.println("kind(TagController) : " + kind);
+		System.out.println("beginDate(TagController) : " + beginDate);
+		System.out.println("lastDate(TagController) : " + lastDate);
 		
 		List<Map<String, Object>> list = null;
 		
-		if(request.getParameter("kind") == null) { // 수입, 지출을 누르지않았다면
-			list = hashtagDao.selectTagRankList(sessionMemberId); // 전체 항목 리스트 출력
-		} else {
-			list = hashtagDao.selectKindByList(kind, sessionMemberId); 
+		if(request.getParameter("kind") == null && request.getParameter("beginDate") == null && request.getParameter("lastDate") == null) { // 수입 or 지출, 날짜를 누르지않았다면
+			list = hashtagDao.selectTagRankList(sessionMemberId); // 전체 항목 리스트 
+		} else {	
+			list = hashtagDao.selectKindDateByList(kind, beginDate, lastDate, sessionMemberId); // 검색 했을 시 리스트
 		}
 
+		request.setAttribute("kind", kind);
+		request.setAttribute("beginDate", beginDate);
+		request.setAttribute("lastDate", lastDate);
 		request.setAttribute("list", list);
 		
 		//뷰 포워딩

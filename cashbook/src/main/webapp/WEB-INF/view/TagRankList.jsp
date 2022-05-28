@@ -20,13 +20,30 @@
 	<h1 class = "bottom text-center">Tag rank</h1>
 	<br>
 	<div>
-		<a class="btn btn-outline-success" href= "<%=request.getContextPath()%>/TagRankController">전체</a>
-		<a class="btn btn-outline-primary" href= "<%=request.getContextPath()%>/TagRankController?kind=수입">수입</a>
-		<a class="btn btn-outline-primary" href= "<%=request.getContextPath()%>/TagRankController?kind=지출">지출</a>
-		
-		<form method = "get" action = "<%=request.getContextPath()%>/DayController">
+	<form method = "get" action = "<%=request.getContextPath()%>/TagRankController">
 		<span class = "float-right">
-			<input type = "date" name = "beginDate"> ~ <input type = "date" name = "lastDate"> 
+			<select name="kind">
+				<option value="">전체</option>
+			<%
+				if(request.getAttribute("kind")!=null && request.getAttribute("kind").equals("수입")) { // 수입을 검색했다면
+			%>
+					<option value ="<%=request.getAttribute("kind")%>" selected><%=request.getAttribute("kind")%></option>
+					<option value="지출" >지출</option>					
+			<%
+				} else if(request.getAttribute("kind")!=null && request.getAttribute("kind").equals("지출")) { // 지출을 검색했다면
+			%>
+					<option value="수입" >수입</option>
+					<option value ="<%=request.getAttribute("kind")%>" selected><%=request.getAttribute("kind")%></option>
+			<%
+				} else { // 아무것도 검색하지 않았을경우 
+			%>
+					<option value="수입">수입</option>
+					<option value="지출">지출</option>
+			<%
+				}
+			%>
+			</select>
+			<input type = "date" name = "beginDate" value="<%=request.getAttribute("beginDate")%>"> ~ <input type = "date" name = "lastDate" value="<%=request.getAttribute("lastDate")%>"> 
 			<button type = "submit" class="btn btn-primary">날짜별 검색</button>
 		</span>
 		</form>
