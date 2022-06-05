@@ -34,19 +34,19 @@ public class DeleteCashBookController extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/view/DeleteCashBook.jsp").forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		
-		
-		//삭제할 cashbookNo 요청값 불러오기
+		//삭제할 cashbookNo, pw 요청값 불러오기
 		int cashbookNo = Integer.parseInt(request.getParameter("cashbookNo"));
+		String cashbookPw = request.getParameter("cashbookPw");
 		
 		//디버깅
 		System.out.println("cashbookNo(deleteCashBook):"+cashbookNo);
+		System.out.println("cashbookPw(deleteCashBook):"+cashbookPw);
 		
 		CashBookDao cashBookDao = new CashBookDao();
 		
 		// 메서드 호출해서 삭제된 행 개수 담아오기
-		int row = cashBookDao.deleteCashBook(cashbookNo);
+		int row = cashBookDao.deleteCashBook(cashbookNo, cashbookPw);
 		//디버깅
 		System.out.println("row(deleteCashBook): " + row);
 		if(row != 1) { // 삭제 실패했다면 

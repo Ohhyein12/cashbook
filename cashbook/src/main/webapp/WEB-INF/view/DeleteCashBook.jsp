@@ -19,17 +19,21 @@
 </head>
 <body>
 	<div class = "container">
-		<h1 class = "bottom top text-center">가계부 삭제</h1>
-		<table class = "table">
-			<tr>
-				<td>가계부 번호</td>
-				<td><input type="number" name="cashbookNo" value="<%=cashbookNo%>"></td>
-			</tr>
-			<tr>
-				<td>비밀번호</td>
-				<td><input type="password" name="pw"></td>
-			</tr>
-		</table>
+		<form method = "post" action = "<%=request.getContextPath()%>/DeleteCashBookController">
+			<h2 class = "bottom top text-center">가계부 삭제</h2>
+			<table class = "table table-bordered">
+				<tr>
+					<th class = "table-active">가계부 번호</th>
+					<td><input type="number" name="cashbookNo" readonly = "readonly" value="<%=cashbookNo%>" class="form-control"></td>
+				</tr>
+				<tr>
+					<th class = "table-active"> 계정 비밀번호</th>
+					<td><input type="password" name="cashbookPw" class="form-control"></td>
+				</tr>
+			</table>
+			<a href="<%=request.getContextPath()%>/CashBookOneController?cashbookNo=<%=cashbookNo%>" class="btn btn-secondary">이전</a>
+			<button type ="submit" class="btn btn-outline-dark float-right">삭제하기</button>
+		</form>
 	</div>
 </body>
 </html>

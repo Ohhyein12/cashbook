@@ -201,14 +201,20 @@ public class CashBookDao {
 	}
 	
 	// 삭제위한 메서드
-	public int deleteCashBook(int cashbookNo) {
+	public int deleteCashBook(int cashbookNo, String cashbookPw) {
 		//삭제한 행 개수 담을 row 생성
 		int row = 0;
 		Connection conn = null;
 		PreparedStatement hashtagStmt = null;
 		PreparedStatement cashbookStmt = null;
-		String cashbookSql = "DELETE FROM cashbook WHERE cashbook_no = ?"; 
+		String cashbookSql = "DELETE c"
+				+ "			  FROM cashbook c"
+				+ "			  INNER JOIN member m"
+				+ "				  ON c.member_id = m.member_id"
+				+ "			  WHERE c.cashbook_no = ? AND m.member_pw=PASSWORD(?)"; 
+		
 		String hashtagSql = "DELETE FROM hashtag WHERE cashbook_no = ?";
+		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
@@ -221,6 +227,7 @@ public class CashBookDao {
 			// 가계부 삭제
 			cashbookStmt = conn.prepareStatement(cashbookSql);
 			cashbookStmt.setInt(1, cashbookNo);
+			cashbookStmt.setString(2, cashbookPw);
 		
 			hashtagStmt.executeUpdate();
 			row = cashbookStmt.executeUpdate();

@@ -28,7 +28,7 @@ public class CashBookOneController extends HttpServlet {
 		
 		//요청값 받아오기
 		int cashbookNo = Integer.parseInt(request.getParameter("cashbookNo"));
-		int m = 0;
+		int m = -1;
 		if(request.getParameter("m") != null && !"".equals(request.getParameter("m"))) {
 			m = Integer.parseInt(request.getParameter("m"));
 		}
