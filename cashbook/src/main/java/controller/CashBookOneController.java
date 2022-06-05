@@ -28,13 +28,17 @@ public class CashBookOneController extends HttpServlet {
 		
 		//요청값 받아오기
 		int cashbookNo = Integer.parseInt(request.getParameter("cashbookNo"));
-		int m = Integer.parseInt(request.getParameter("m"));
+		int m = 0;
+		if(request.getParameter("m") != null && !"".equals(request.getParameter("m"))) {
+			m = Integer.parseInt(request.getParameter("m"));
+		}
 		
 		CashBookDao cashBookDao = new CashBookDao();
 		
 		// cashBook에 selectCashBookOne메서드로 호출한 상세정보 저장
 		CashBook cashBook = cashBookDao.selectCashBookOne(cashbookNo);
 		request.setAttribute("cashBook", cashBook);
+		request.setAttribute("m", m);
 	
 		// 뷰 포워딩
 		request.getRequestDispatcher("/WEB-INF/view/CashBookOne.jsp").forward(request, response);

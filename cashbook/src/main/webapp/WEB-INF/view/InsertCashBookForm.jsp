@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <title>InsertCashBookForm</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<jsp:include page ="./upMenu.jsp"></jsp:include>
 <style>
 	.bottom {margin-bottom:60px;}
 	.top {margin-top:50px;}

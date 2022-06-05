@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "vo.*" %>
 <%
-	int m = (int)(request.getAttribute("m"));
+	int m = -1;
+	if(request.getAttribute("m") != null && !"".equals(request.getAttribute("m"))) {
+		m = (int)request.getAttribute("m");
+	}
 	CashBook cashBook = (CashBook)request.getAttribute("cashBook");
 	
-          // 디버깅
+	// 디버깅
 	System.out.println(cashBook +"<--cashBook CashBookOne.jsp");
+	System.out.println(m +"<--m CashBookOne.jsp");
 		
 %>
 
@@ -15,6 +19,7 @@
 <meta charset="UTF-8">
 <title>CashBookOne</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<jsp:include page ="./upMenu.jsp"></jsp:include>
 <style>
 	.bottom {margin-bottom:60px;}
 	.top {margin-top:50px;}
@@ -57,7 +62,7 @@
 				<td><%=cashBook.getCreateDate()%></td>
 			</tr>
 		</table>
-		<a href="<%=request.getContextPath()%>/CashBookListByMonthController" class = "btn btn-secondary">이전</a>
+		<a href="<%=request.getContextPath()%>/CashBookListByMonthController?m=<%=m%>" class = "btn btn-secondary">이전</a>
 		<span class = "float-right">
 			<a href="<%=request.getContextPath()%>/UpdateCashBookController?cashbookNo=<%=cashBook.getCashbookNo()%>" class = "btn btn-outline-dark">수정</a> 
 			<a href="<%=request.getContextPath()%>/DeleteCashBookController?cashbookNo=<%=cashBook.getCashbookNo()%>" class = "btn btn-outline-dark">삭제</a>

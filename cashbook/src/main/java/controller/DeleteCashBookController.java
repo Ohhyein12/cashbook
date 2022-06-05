@@ -15,7 +15,6 @@ import dao.CashBookDao;
 public class DeleteCashBookController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		HttpSession session = request.getSession(); 
 		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
 		System.out.println("sessionMemberId(DeleteCashBookController) :" + sessionMemberId);
@@ -23,6 +22,20 @@ public class DeleteCashBookController extends HttpServlet {
 			response.sendRedirect(request.getContextPath()+"/LoginController");
 			return;
 		}
+		
+		//삭제할 cashbookNo 요청값 불러오기
+		int cashbookNo = Integer.parseInt(request.getParameter("cashbookNo"));
+		//디버깅
+		System.out.println("cashbookNo(deleteCashBook):"+cashbookNo);
+		
+		request.setAttribute("cashbookNo", cashbookNo);
+		
+		//뷰 포워딩
+		request.getRequestDispatcher("/WEB-INF/view/DeleteCashBook.jsp").forward(request, response);
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		
 		
 		//삭제할 cashbookNo 요청값 불러오기
 		int cashbookNo = Integer.parseInt(request.getParameter("cashbookNo"));

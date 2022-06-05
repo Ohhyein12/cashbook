@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title>TagList</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<jsp:include page ="./upMenu.jsp"></jsp:include>
 <style>
 	.bottom {margin-bottom:30px;}
 	.top {margin-top:10px;}

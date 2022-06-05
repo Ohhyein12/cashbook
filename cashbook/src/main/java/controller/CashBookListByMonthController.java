@@ -34,7 +34,7 @@ public class CashBookListByMonthController extends HttpServlet {
 		if(request.getParameter("y") != null) { // 이전 혹은 다음달을 클릭했다면
 			y = Integer.parseInt(request.getParameter("y")); // 요청값으로 받아와서 저장
 		}
-		if(request.getParameter("m") != null) {
+		if(request.getParameter("m") != null && !"-1".equals(request.getParameter("m"))) {
 			m = Integer.parseInt(request.getParameter("m"));
 		}
 		if(m==0) { // 1월에서 이전달로 가기를 눌렀다면 12월이라는 말

@@ -3,7 +3,7 @@
 <%
 	CashBook cashBook = (CashBook)request.getAttribute("cashBook");
 	
-          // 디버깅
+	// 디버깅
 	System.out.println(cashBook +"<--cashBook CashBookOne.jsp");
 		
 %>
@@ -13,6 +13,7 @@
 <meta charset="UTF-8">
 <title>UpdateCashBook</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<jsp:include page ="./upMenu.jsp"></jsp:include>
 <style>
 	.bottom {margin-bottom:60px;}
 	.top {margin-top:50px;}
