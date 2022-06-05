@@ -13,7 +13,7 @@
 </style>
 </head>
 <body>
-<body class = "container-fluid">
+<body class = "container">
 <%
 	Member member = (Member)request.getAttribute("member");
 

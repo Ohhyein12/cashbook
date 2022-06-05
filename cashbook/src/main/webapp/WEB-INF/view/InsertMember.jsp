@@ -17,7 +17,7 @@
 		<form method = "post" action = "<%=request.getContextPath()%>/InsertMemberController">
 			<table class ="table table-bordered">
 				<colgroup>
-					<col width = "25%" class="text-center">
+					<col width = "20%" class="text-center">
 					<col width = "*">
 				</colgroup>
 				<tr>
@@ -52,7 +52,6 @@
 			</table>
 			<a href="<%=request.getContextPath()%>/LoginController" class="btn btn-success">이전</a>
 			<button type="submit"  class="btn btn-outline-success float-right top">회원가입</button>
-			
 		</form>
 	</div>
 </body>

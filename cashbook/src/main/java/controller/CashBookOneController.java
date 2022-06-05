@@ -17,6 +17,7 @@ public class CashBookOneController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// 로그인 세션 작업
 		HttpSession session = request.getSession();
 		String sessionMemberId = (String)session.getAttribute("sessionMemberId");
 		System.out.println("sessionMemberId(CashBookOneController) :" + sessionMemberId);
@@ -27,6 +28,7 @@ public class CashBookOneController extends HttpServlet {
 		
 		//요청값 받아오기
 		int cashbookNo = Integer.parseInt(request.getParameter("cashbookNo"));
+		int m = Integer.parseInt(request.getParameter("m"));
 		
 		CashBookDao cashBookDao = new CashBookDao();
 		

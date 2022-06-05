@@ -11,7 +11,7 @@
 </style>
 </head>
 <body>
-	<div class = "container-fluid">
+	<div class = "container">
 		<h1 class = "bottom top">InsertCashBook</h1>
 		<form action="<%=request.getContextPath()%>/InsertCashBookController" method="post">
 			<table class = "table table-bordered">
