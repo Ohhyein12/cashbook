@@ -51,8 +51,8 @@
 					<td><input type="password" name="memberPw" class ="form-control"></td>
 				</tr>
 			</table>
-			<a href="<%=request.getContextPath()%>/LoginController" class="btn btn-success">이전</a>
-			<button type="submit"  class="btn btn-outline-success float-right top">회원가입</button>
+			<a href="<%=request.getContextPath()%>/LoginController" class="btn btn-secondary">이전</a>
+			<button type="submit"  class="btn btn-success float-right top">회원가입</button>
 		</form>
 	</div>
 </body>

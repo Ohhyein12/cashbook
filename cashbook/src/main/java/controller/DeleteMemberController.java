@@ -41,12 +41,14 @@ public class DeleteMemberController extends HttpServlet {
 		System.out.println("memberId(DeleteMemberController):"+ memberId);
 		System.out.println("memberPw(DeleteMemberController):"+ memberPw);
 		
+		//데이터 바인딩
 		Member member = new Member();
 		member.setMemberId(memberId);
 		member.setMemberPw(memberPw);
 		
 		MemberDao memberDao = new MemberDao();
 		
+		// memberDao의 deleteMember메서드 호출해서 멤버 삭제 시키고 삭제된 행 개수 받아서 저장
 		int row = memberDao.deleteMember(member);
 		
 		if(row != 1) { // 행 삭제 실패했을경우

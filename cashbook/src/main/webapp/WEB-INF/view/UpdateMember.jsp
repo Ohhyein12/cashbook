@@ -23,7 +23,7 @@
 	<div  class = "container">
 		<h1 class = "bottom top text-center">정보 수정하기</h1>
 		<form method = "post" action = "<%=request.getContextPath()%>/UpdateMemberController">
-			<table class="table table-bordered">
+			<table class="table table-bordered text-center">
 				<colgroup>
 					<col width = "20%">
 					<col width = "*">
@@ -45,15 +45,15 @@
 					<td>
 						<select name = "memberGender" class ="form-control"> 
 							<%
-								if("남".equals("member.getMemberGender()")){
+								if("남".equals(member.getMemberGender())){
 							%>
 									<option value="<%=member.getMemberGender()%>" selected="selected"><%=member.getMemberGender()%></option>
 									<option value="여">여</option>	
 							<%
 								} else {
 							%>
-								<option value="남">남</option>
-								<option value="<%=member.getMemberGender()%>" selected="selected"><%=member.getMemberGender()%></option>
+									<option value="남">남</option>
+									<option value="<%=member.getMemberGender()%>" selected="selected"><%=member.getMemberGender()%></option>
 							<%
 								}
 							%>
@@ -81,8 +81,8 @@
 					<td><input type = "password" name="CheckMemberPw"  class = "form-control"></td>
 				</tr>
 			</table>
-			<a href="<%=request.getContextPath()%>/SelectMemberOneController"  class="btn btn-success">이전</a>
-			<button type = "submit"  class="btn btn-outline-success float-right">수정</button>
+			<a href="<%=request.getContextPath()%>/SelectMemberOneController"  class="btn btn-secondary">이전</a>
+			<button type = "submit"  class="btn btn-success float-right">수정</button>
 		</form>
 	</div>
 </body>

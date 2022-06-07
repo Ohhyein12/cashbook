@@ -14,6 +14,9 @@
 <style>
    .bottom {margin-bottom:30px;}
    .top {margin-top:10px;}
+   .none {margin-top: 100px;
+   		font-size:20px;
+   		}
 </style>
 </head>
 <body>
@@ -45,30 +48,44 @@
                %>
                </select>
                <input type = "date" name = "beginDate" class="form-control" value="<%=request.getAttribute("beginDate")%>"> ~ <input type = "date" name = "lastDate" class="form-control" value="<%=request.getAttribute("lastDate")%>"> 
-               <button type = "submit" class="btn btn-primary">날짜별 검색</button>
+               <button type = "submit" class="btn btn-primary">검색</button>
             </span>
          </form>
       </div>   
       
-      <table class = "table">
-         <tr>
-            <th>kind</th>
-            <th>rank</th>
-            <th>tag</th>
-            <th>count</th>
-         </tr>
          <%
-            for(Map<String, Object> map : list) {
+         	if(list.size()==0) {
          %>
-               <tr>
-                  <td><%=map.get("kind")%></td>
-                  <td><%=map.get("rank")%></td>
-                  <td><a href="<%=request.getContextPath()%>/TagByListController?tag=<%=map.get("tag")%>"><%=map.get("tag")%></a></td>
-                  <td><%=map.get("cnt")%></td>
-               </tr>
+         		 <div class = "none">해당 조건과 일치하는 태그가 없습니다</div>
          <%
-            }
+         	} 
          %>
+         <table class = "table">
+	         <tr>	
+				 <colgroup>
+		       		<col width="25%">
+		       		<col width="25%">
+		       		<col width="25%">
+		       		<col width="*">
+		         </colgroup>
+		         <th>kind</th>
+		         <th>rank</th>
+		         <th>tag</th>
+		         <th>count</th>
+	       	</tr>
+	      	<%
+	       		for(Map<String, Object> map : list) {
+	       	%>
+	              <tr>
+	                 <td><%=map.get("kind")%></td>
+	                 <td><%=map.get("rank")%></td>
+	                 <td><a href="<%=request.getContextPath()%>/TagByListController?tag=<%=map.get("tag")%>"><%=map.get("tag")%></a></td>
+	                 <td><%=map.get("cnt")%></td>
+	              </tr>
+	         <%
+	            }
+	         	
+	         %>
       </table>
    </div>
 </body>

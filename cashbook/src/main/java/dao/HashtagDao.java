@@ -65,134 +65,38 @@ public class HashtagDao {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
-		String sql = null;
+		String sql = "SELECT RANK() over(ORDER BY t.cnt DESC) rank, t.kind, t.tag, t.cnt, t.cashDate"
+				+ "	FROM"
+				+ "		(SELECT c.kind kind, tag, COUNT(*) cnt, member_id, c.cash_date cashDate"
+				+ "		FROM hashtag h"
+				+ "		INNER JOIN cashbook c"
+				+ "			ON h.cashbook_no = c.cashbook_no";	
 		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashbook","root","java1234");
-			if("".equals(kind) && "".equals(beginDate) && "".equals(lastDate)) {
-				sql = "SELECT RANK() over(ORDER BY t.cnt DESC) rank, t.kind, t.tag, t.cnt, t.cashDate"
-						+ "	FROM"
-						+ "		(SELECT c.kind kind, tag, COUNT(*) cnt, member_id, c.cash_date cashDate"
-						+ "		FROM hashtag h"
-						+ "		INNER JOIN cashbook c"
-						+ "			ON h.cashbook_no = c.cashbook_no"
-						+ "		WHERE c.cash_date BETWEEN '0000-00-00' AND '9999-12-31'"
-						+ "		GROUP BY h.tag) t"
-						+ "	WHERE t.member_id= ? ";	
-				
+			if("".equals(kind)) {
+				 
+				sql += "	WHERE c.cash_date BETWEEN ? AND ?"
+					+"		GROUP BY h.tag) t"
+					+"	WHERE t.member_id= ?";
+				 
 				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, sessionMemberId);
-				
-			} else if (!"".equals(kind) && "".equals(beginDate) && "".equals(lastDate)) { // 수입 or 지출 만 검색했을때
-				sql = "SELECT RANK() over(ORDER BY t.cnt DESC) rank, t.kind, t.tag, t.cnt, t.cashDate"
-					+ "	FROM"
-					+ "		(SELECT c.kind kind, tag, COUNT(*) cnt, member_id, c.cash_date cashDate"
-					+ "		FROM hashtag h"
-					+ "		INNER JOIN cashbook c"
-					+ "			ON h.cashbook_no = c.cashbook_no"
-					+ "		WHERE c.kind = ? AND c.cash_date BETWEEN '0000-00-00' AND '9999-12-31'"
-					+ "		GROUP BY h.tag) t"
-					+ "	WHERE t.member_id= ? ";	
-
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, kind);
-				stmt.setString(2, sessionMemberId);
-				
-			} else if (!"".equals(kind) && !"".equals(beginDate) && "".equals(lastDate)) { // 수입 or 지출 누르고 시작 날짜 눌렀을때
-				sql = "SELECT RANK() over(ORDER BY t.cnt DESC) rank, t.kind, t.tag, t.cnt, t.cashDate"
-						+ "	FROM"
-						+ "		(SELECT c.kind kind, tag, COUNT(*) cnt, member_id, c.cash_date cashDate"
-						+ "		FROM hashtag h"
-						+ "		INNER JOIN cashbook c"
-						+ "			ON h.cashbook_no = c.cashbook_no"
-						+ "		WHERE c.kind = ? AND c.cash_date BETWEEN ? AND '9999-12-31'"
-						+ "		GROUP BY h.tag) t"
-						+ "	WHERE t.member_id= ? ";		
-
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, kind);
-				stmt.setString(2, beginDate);
-				stmt.setString(3, sessionMemberId);
-				
-			} else if (!"".equals(kind) && "".equals(beginDate) && !"".equals(lastDate)) { // 수입 or 지출 누르고 마지막 날짜 눌렀을때
-				sql = "SELECT RANK() over(ORDER BY t.cnt DESC) rank, t.kind, t.tag, t.cnt, t.cashDate"
-						+ "	FROM"
-						+ "		(SELECT c.kind kind, tag, COUNT(*) cnt, member_id, c.cash_date cashDate"
-						+ "		FROM hashtag h"
-						+ "		INNER JOIN cashbook c"
-						+ "			ON h.cashbook_no = c.cashbook_no"
-						+ "		WHERE c.kind = ? AND c.cash_date BETWEEN '0000-00-00' AND ? "
-						+ "		GROUP BY h.tag) t"
-						+ "	WHERE t.member_id= ? ";	
-				
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, kind);
+				stmt.setString(1, beginDate);
 				stmt.setString(2, lastDate);
 				stmt.setString(3, sessionMemberId);
 				
-			} else if (!"".equals(kind) && !"".equals(beginDate) && !"".equals(lastDate)) { // 수입 or 지출 누르고 시작 날짜와 마지막 날짜 모두 눌렀을때
-				sql = "SELECT RANK() over(ORDER BY t.cnt DESC) rank, t.kind, t.tag, t.cnt, t.cashDate"
-						+ "	FROM"
-						+ "		(SELECT c.kind kind, tag, COUNT(*) cnt, member_id, c.cash_date cashDate"
-						+ "		FROM hashtag h"
-						+ "		INNER JOIN cashbook c"
-						+ "			ON h.cashbook_no = c.cashbook_no"
-						+ "		WHERE c.kind = ? AND c.cash_date BETWEEN ? AND ? "
-						+ "		GROUP BY h.tag) t"
-						+ "	WHERE t.member_id= ? ";	
+			} else { // 수입 or 지출 검색했을때
 				
+				sql += "		WHERE c.kind = ? AND c.cash_date BETWEEN ? AND ?"
+					+ "		GROUP BY h.tag) t"
+					+ "	WHERE t.member_id= ?";
+
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, kind);
 				stmt.setString(2, beginDate);
 				stmt.setString(3, lastDate);
 				stmt.setString(4, sessionMemberId);
-				
-			} else if ("".equals(kind) && !"".equals(beginDate) && !"".equals(lastDate)) { // 시작과 마지막날짜 넣었을때 
-				sql = "SELECT RANK() over(ORDER BY t.cnt DESC) ranking, t.kind, t.tag, t.cnt, t.cashDate"
-						+ " FROM"
-						+ "		(SELECT c.kind kind, tag, COUNT(*) cnt, member_id, c.cash_date cashDate"
-						+ "		FROM hashtag h"
-						+ "		INNER JOIN cashbook c"
-						+ "			ON h.cashbook_no = c.cashbook_no"
-						+ "		WHERE c.cash_date BETWEEN ? AND ? "
-						+ "		GROUP BY h.tag) t"
-						+ "		WHERE t.member_id= ? ";	
-				
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, beginDate);
-				stmt.setString(2, lastDate);
-				stmt.setString(3, sessionMemberId);
-				
-			} else if ("".equals(kind) && !"".equals(beginDate) && "".equals(lastDate)) { // 시작만 넣었을때 
-				sql = "SELECT RANK() over(ORDER BY t.cnt DESC) rank, t.kind, t.tag, t.cnt, t.cashDate"
-						+ "	FROM"
-						+ "		(SELECT c.kind kind, tag, COUNT(*) cnt, member_id, c.cash_date cashDate"
-						+ "		FROM hashtag h"
-						+ "		INNER JOIN cashbook c"
-						+ "			ON h.cashbook_no = c.cashbook_no"
-						+ "		WHERE c.cash_date BETWEEN ? AND '9999-12-31' "
-						+ "		GROUP BY h.tag) t"
-						+ "	WHERE t.member_id= ? ";	
-				
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, beginDate);
-				stmt.setString(2, sessionMemberId);
-				
-			} else if ("".equals(kind) && "".equals(beginDate) && !"".equals(lastDate)) { // 마지막날짜만 넣었을때 
-				sql = "SELECT RANK() over(ORDER BY t.cnt DESC) rank, t.kind, t.tag, t.cnt, t.cashDate"
-						+ "	FROM"
-						+ "		(SELECT c.kind kind, tag, COUNT(*) cnt, member_id, c.cash_date cashDate"
-						+ "		FROM hashtag h"
-						+ "		INNER JOIN cashbook c"
-						+ "			ON h.cashbook_no = c.cashbook_no"
-						+ "		WHERE c.cash_date BETWEEN '0000-00-00' AND ? "
-						+ "		GROUP BY h.tag) t"
-						+ "	WHERE t.member_id= ? ";	
-				
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, lastDate);
-				stmt.setString(2, sessionMemberId);
 			}
  			
 			rs = stmt.executeQuery();

@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -28,21 +30,31 @@ public class TagRankController extends HttpServlet {
 		
 		HashtagDao hashtagDao = new HashtagDao();
 		
+		// 오늘 날짜 뽑아오기
+		Date nowTime = new Date();
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+
+				
 		//요청값 불러오기 
 		String kind = null;
-		String beginDate = null;
-		String lastDate = null;
-
+		String beginDate = "0000-00-00"; // 초기값 정해주기
+		String nowDate = sf.format(nowTime);
+		String lastDate = nowDate; 
+		
+		
 		if(request.getParameter("kind")!=null) { // 지출, 수입 중 하나를 선택했다면 값이 들어올 것
 			kind = request.getParameter("kind");
 		} 
 		
-		if(request.getParameter("beginDate")!=null || !"".equals(request.getParameter("beginDate")) && request.getParameter("lastDate")!=null || !"".equals(request.getParameter("lastDate"))) {
-			System.out.println("".equals(request.getParameter("beginDate")));
+		if(request.getParameter("lastDate")!=null && !"".equals(request.getParameter("lastDate")) && !"nowDate".equals(request.getParameter("lastDate"))) {
 			System.out.println("".equals(request.getParameter("lastDate")));
 			
-			beginDate = request.getParameter("beginDate");
 			lastDate = request.getParameter("lastDate");
+		}
+		if(request.getParameter("beginDate")!=null && !"".equals(request.getParameter("beginDate"))) {
+			System.out.println("".equals(request.getParameter("beginDate")));
+			
+			beginDate = request.getParameter("beginDate");
 		}
 		
 		//디버깅

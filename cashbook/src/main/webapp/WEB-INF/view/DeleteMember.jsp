@@ -16,7 +16,7 @@
 	<div class = "container">
 		<form method = "post" action = "<%=request.getContextPath()%>/DeleteMemberController">
 			<h1 class = "bottom top text-center">계정 탈퇴</h1>
-			<table class="table table-bordered">
+			<table class="table table-bordered text-center">
 				<colgroup>
 					<col width = "20%">
 					<col width = "*">
@@ -30,8 +30,8 @@
 					<td><input type="password" name="memberPw" class = "form-control"></td>
 				</tr>
 			</table>
-			<a href="<%=request.getContextPath()%>/SelectMemberOneController" class="btn btn-success">이전</a>
-			<button type ="submit" class="btn btn-outline-success float-right">탈퇴하기</button>
+			<a href="<%=request.getContextPath()%>/SelectMemberOneController" class="btn btn-secondary">이전</a>
+			<button type ="submit" class="btn btn-success float-right">탈퇴하기</button>
 		</form>
 	</div>
 </body>

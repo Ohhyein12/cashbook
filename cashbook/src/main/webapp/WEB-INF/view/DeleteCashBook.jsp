@@ -23,16 +23,16 @@
 			<h2 class = "bottom top text-center">가계부 삭제</h2>
 			<table class = "table table-bordered">
 				<tr>
-					<th class = "table-active">가계부 번호</th>
+					<th class = "table-success">가계부 번호</th>
 					<td><input type="number" name="cashbookNo" readonly = "readonly" value="<%=cashbookNo%>" class="form-control"></td>
 				</tr>
 				<tr>
-					<th class = "table-active"> 계정 비밀번호</th>
+					<th class = "table-success"> 계정 비밀번호</th>
 					<td><input type="password" name="cashbookPw" class="form-control"></td>
 				</tr>
 			</table>
 			<a href="<%=request.getContextPath()%>/CashBookOneController?cashbookNo=<%=cashbookNo%>" class="btn btn-secondary">이전</a>
-			<button type ="submit" class="btn btn-outline-dark float-right">삭제하기</button>
+			<button type ="submit" class="btn btn-success float-right">삭제</button>
 		</form>
 	</div>
 </body>

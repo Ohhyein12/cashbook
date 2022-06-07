@@ -11,6 +11,9 @@
 <style>
    .bottom {margin-bottom:80px;}
    .top {margin-top:30px;}
+   .plus {color : #487AB8;}
+   .minus {color: #e33950f2;}
+	hr {margin-top: 1.5rem;}
 </style>
 </head>
 <body>
@@ -54,8 +57,18 @@
          6) 오늘 날짜
       -->
       <table class ="table table-bordered table-striped">
+      	<colgroup>
+      		<col width="10%">
+      		<col width="10%">
+      		<col width="10%">
+      		<col width="10%">
+      		<col width="10%">
+      		<col width="10%">
+      		<col width="10%">
+      	</colgroup>
+      	
          <thead>
-            <tr>
+            <tr class = "text-center">
                <th class = "text-danger">일</th>
                <th>월</th>
                <th>화</th>
@@ -80,7 +93,7 @@
                         <td>
                            <span class = "<%=c%>"><%=i-startBlank%></span>
                            <a href="<%=request.getContextPath()%>/InsertCashBookController?y=<%=y%>&m=<%=m%>&d=<%=i-startBlank%>" class="btn btn-light float-right">입력</a>
-                           <br>
+                           <hr>
                            <div>
                               <!-- 해당 날짜의 cashbook 목록 출력 -->
                               <%
@@ -88,8 +101,18 @@
                                     if((Integer)map.get("day") == (i-startBlank)) {
                               %>
                                        <div>
-                                          <a href="<%=request.getContextPath()%>/CashBookOneController?cashbookNo=<%=map.get("cashbookNo")%>&m=<%=m%>">
-                                             [<%=map.get("kind")%>] 
+                                          <a href="<%=request.getContextPath()%>/CashBookOneController?cashbookNo=<%=map.get("cashbookNo")%>&m=<%=m%>&y=<%=y%>" class="text-body">
+                                          <%
+                                          	if("수입".equals(map.get("kind"))) {
+                                          %>
+                                             	<span class = "plus">[<%=map.get("kind")%>]</span>
+                                          <%
+                                          	} else {
+                                          %>
+                                          		<span class = "minus">[<%=map.get("kind")%>]</span>
+                                          <%
+                                          	}
+                                          %>
                                              <%=map.get("cash")%>원
                                              <%=map.get("memo")%>...
                                           </a>

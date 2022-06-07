@@ -26,11 +26,14 @@ public class CashBookOneController extends HttpServlet {
 			return;
 		}
 		
-		//요청값 받아오기
+		//요청값 받아오기 
+		//상세보기 작업했다가 이전 버튼 눌렀을때 해당 년월로 보내기 위함
 		int cashbookNo = Integer.parseInt(request.getParameter("cashbookNo"));
 		int m = -1;
+		int y = -1;
 		if(request.getParameter("m") != null && !"".equals(request.getParameter("m"))) {
 			m = Integer.parseInt(request.getParameter("m"));
+			y = Integer.parseInt(request.getParameter("y"));
 		}
 		
 		CashBookDao cashBookDao = new CashBookDao();
@@ -39,6 +42,7 @@ public class CashBookOneController extends HttpServlet {
 		CashBook cashBook = cashBookDao.selectCashBookOne(cashbookNo);
 		request.setAttribute("cashBook", cashBook);
 		request.setAttribute("m", m);
+		request.setAttribute("y", y);
 	
 		// 뷰 포워딩
 		request.getRequestDispatcher("/WEB-INF/view/CashBookOne.jsp").forward(request, response);

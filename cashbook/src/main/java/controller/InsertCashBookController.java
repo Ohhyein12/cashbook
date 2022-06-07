@@ -31,6 +31,8 @@ public class InsertCashBookController extends HttpServlet {
 		String d = request.getParameter("d");
 		String cashDate = y+"-"+m+"-"+d;
 		request.setAttribute("cashDate", cashDate);
+		request.setAttribute("y",y);
+		request.setAttribute("m",m);
 		request.getRequestDispatcher("/WEB-INF/view/InsertCashBookForm.jsp").forward(request, response);
 	}
 	

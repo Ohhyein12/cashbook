@@ -63,8 +63,6 @@ public class InsertMemberController extends HttpServlet {
 			memberPw = request.getParameter("memberPw");
 		}
 		
-		
-		
 		//디버깅
 		System.out.println("memberId(insertMemberController):" + memberId);
 		System.out.println("memberName(insertMemberController):" + memberName);

@@ -29,16 +29,16 @@
 					<col width = "*">
 				</colgroup>
 				<tr>
-					<th class = "table-active">cashbookNo</th>
+					<th class = "table-success text-center">가계부 번호</th>
 					<td><input type="number" name="cashbookNo" readonly="readonly" value=<%=cashBook.getCashbookNo()%> class = "form-control"></td>
 					
 				</tr>
 				<tr>
-					<th class = "table-active">CashDate</th>
+					<th class = "table-success text-center">날짜</th>
 					<td><input type="date" name="cashDate" value=<%=cashBook.getCashDate()%> class = "form-control"></td>
 				</tr>
 				<tr>
-					<th class = "table-active">Kind</th>
+					<th class = "table-success text-center">수입 / 지출</th>
 					<td>
 						<%
 							if("수입".equals(cashBook.getKind())) {
@@ -56,25 +56,25 @@
 					</td>
 				</tr>
 				<tr>
-					<th class = "table-active">Cash</th>
+					<th class = "table-success text-center">금액</th>
 					<td><input type="number" name="cash" value=<%=cashBook.getCash()%> class = "form-control"></td>
 				</tr>
 				<tr>
-					<th class = "table-active">Memo</th>
+					<th class = "table-success text-center">메모</th>
 					<td>
 						<textarea rows="4" cols="50" name="memo" class = "form-control"><%=cashBook.getMemo()%></textarea>
 					</td>
 				</tr>
 				<tr>
-					<th class = "table-active">UpdateDate</th>
-					<td><%=cashBook.getUpdateDate()%></td>
-				</tr>
-				<tr>
-					<th class = "table-active">CreateDate</th>
+					<th class = "table-success text-center">작성일</th>
 					<td><%=cashBook.getCreateDate()%></td>
 				</tr>
+				<tr>
+					<th class = "table-success text-center">수정일</th>
+					<td><%=cashBook.getUpdateDate()%></td>
+				</tr>
 			</table>
-			<button type="submit" class = "float-right btn btn-outline-dark">수정</button>
+			<button type="submit" class = "float-right btn btn-success">수정</button>
 		</form>
 		<a href="<%=request.getContextPath()%>/CashBookOneController?cashbookNo=<%=cashBook.getCashbookNo()%>" class="btn btn-secondary">이전</a>
 	</div>
